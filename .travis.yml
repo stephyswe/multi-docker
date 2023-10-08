@@ -5,30 +5,30 @@ services:
   - docker
 
 before_install:
-  - docker build -t devgonnadev/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t rallycoding/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true devgonnadev/react-test npm test
+  - docker run -e CI=true rallycoding/react-test npm test
 
 after_success:
-  - docker build -t devgonnadev/multi-client ./client
-  - docker build -t devgonnadev/multi-nginx ./nginx
-  - docker build -t devgonnadev/multi-server ./server
-  - docker build -t devgonnadev/multi-worker ./worker
+  - docker build -t rallycoding/multi-client ./client
+  - docker build -t rallycoding/multi-nginx ./nginx
+  - docker build -t rallycoding/multi-server ./server
+  - docker build -t rallycoding/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push devgonnadev/multi-client
-  - docker push devgonnadev/multi-nginx
-  - docker push devgonnadev/multi-server
-  - docker push devgonnadev/multi-worker
+  - docker push rallycoding/multi-client
+  - docker push rallycoding/multi-nginx
+  - docker push rallycoding/multi-server
+  - docker push rallycoding/multi-worker
 
 deploy:
   provider: elasticbeanstalk
-  region: 'eu-north-1'
+  region: 'us-east-1'
   app: 'multi-docker'
-  env: 'Multi-docker-env'
-  bucket_name: 'elasticbeanstalk-eu-north-1-384820790671'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-us-east-1-923445559289'
   bucket_path: 'docker-multi'
   on:
     branch: main
