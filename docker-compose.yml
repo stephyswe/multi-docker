@@ -1,7 +1,7 @@
 version: "3"
 services:
   client:
-    image: "devgonnadev/multi-client4"
+    image: "devgonnadev/multi-client"
     mem_limit: 128m
     hostname: client
   server:
